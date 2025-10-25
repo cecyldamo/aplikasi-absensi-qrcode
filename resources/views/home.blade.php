@@ -33,18 +33,18 @@
                                     @else
                                         <i class="fa-solid fa-circle-xmark text-danger-custom"></i>
                                     @endif
-                                    
+
                                     <div>
                                         <span class="student-name">{{ $attendance->student->name }}</span>
                                         <span class="student-nis">({{ $attendance->student->nis }})</span>
                                     </div>
                                 </div>
                                 <!-- Badge Status -->
-                                <span class="badge status-badge 
+                                <span class="badge status-badge
                                     @if($attendance->status == 'Hadir') status-hadir
                                     @elseif($attendance->status == 'Izin') status-izin
                                     @else status-alpa @endif">
-                                    
+
                                     @if($attendance->status == 'Hadir')
                                         <i class="fa-solid fa-check"></i>
                                     @elseif($attendance->status == 'Izin')
@@ -66,7 +66,7 @@
             </div>
         </div>
 
-        <!-- Kolom Siswa Belum Hadir -->
+        <!-- Kolom Siswa Belum Hadir (Dengan Dropdown) -->
         <div class="col-lg-6 mb-4">
             <div class="card h-100 shadow-sm border-0">
                 <!-- Header Kartu -->
@@ -77,39 +77,45 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush attendance-list">
                         @forelse($absentStudents as $student)
-                            <!-- TATA LETAK DIPERBARUI AGAR TOMBOL SEJAJAR -->
-                            <li class="list-group-item">
-                                <!-- Konten (Ikon & Nama) -->
-                                <div class="item-content">
-                                    <i class="fa-regular fa-user text-muted"></i>
-                                    <div>
-                                        <span class="student-name">{{ $student->name }}</span>
-                                        <span class="student-nis">({{ $student->nis }})</span>
+                            <li class="list-group-item student-item-absent"> <!-- Tambahkan class student-item-absent -->
+                                <!-- Area yang bisa diklik untuk dropdown -->
+                                <a href="#" class="dropdown-toggle-student" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="item-content">
+                                        <i class="fa-regular fa-user text-muted"></i>
+                                        <div>
+                                            <span class="student-name">{{ $student->name }}</span>
+                                            <span class="student-nis">({{ $student->nis }})</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- Tombol Aksi (Akan sejajar di kanan) -->
-                                <div class="action-buttons">
-                                    <form action="{{ route('attendance.update') }}" method="POST" class="d-inline-block">
-                                        @csrf
-                                        <input type="hidden" name="student_id" value="{{ $student->id }}">
-                                        <input type="hidden" name="status" value="Izin">
-                                        <!-- DIPERBAIKI: Menambahkan tanda '=' -->
-                                        <button type="submit" class="btn btn-sm btn-izin">
-                                            <i class="fa-solid fa-file-lines"></i>
-                                            <span>Izin</span>
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('attendance.update') }}" method="POST" class="d-inline-block">
-                                        @csrf
-                                        <input type="hidden" name="student_id" value="{{ $student->id }}">
-                                        <input type="hidden" name="status" value="Alpa">
-                                        <!-- DIPERBAIKI: Menambahkan tanda '=' -->
-                                        <button type="submit" class="btn btn-sm btn-alpa">
-                                            <i class="fa-solid fa-circle-xmark"></i>
-                                            <span>Alpa</span>
-                                        </button>
-                                    </form>
-                                </div>
+                                    <!-- Ikon panah dropdown -->
+                                    <i class="fa-solid fa-caret-down dropdown-arrow"></i>
+                                </a>
+
+                                <!-- Menu Dropdown -->
+                                <ul class="dropdown-menu dropdown-menu-student">
+                                    <li>
+                                        <!-- Form untuk Izin -->
+                                        <form action="{{ route('attendance.update') }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <input type="hidden" name="student_id" value="{{ $student->id }}">
+                                            <input type="hidden" name="status" value="Izin">
+                                            <button type="submit" class="dropdown-item dropdown-item-izin">
+                                                <i class="fa-solid fa-file-lines me-2"></i>Tandai Izin
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <!-- Form untuk Alpa -->
+                                        <form action="{{ route('attendance.update') }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <input type="hidden" name="student_id" value="{{ $student->id }}">
+                                            <input type="hidden" name="status" value="Alpa">
+                                            <button type="submit" class="dropdown-item dropdown-item-alpa">
+                                                <i class="fa-solid fa-circle-xmark me-2"></i>Tandai Alpa
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         @empty
                             <li class="list-group-item text-center no-data-item">
