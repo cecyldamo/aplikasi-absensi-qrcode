@@ -22,38 +22,88 @@
 
                     <ul class="list-group list-group-flush attendance-list">
                         <?php $__empty_1 = true; $__currentLoopData = $presentStudents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                            <li class="list-group-item">
-                                <!-- Konten (Ikon & Nama) -->
-                                <div class="item-content">
+                            
+                            <li class="list-group-item d-flex justify-content-between align-items-start"> 
+                                
+                                <!-- Konten (Ikon & Nama & Waktu) -->
+                                <div class="item-content d-flex"> 
                                     <?php if($attendance->status == 'Hadir'): ?>
-                                        <i class="fa-solid fa-id-badge text-success-custom"></i>
+                                        <i class="fa-solid fa-id-badge text-success-custom me-2 mt-1"></i> 
                                     <?php elseif($attendance->status == 'Izin'): ?>
-                                        <i class="fa-solid fa-file-lines text-info-custom"></i>
+                                        <i class="fa-solid fa-file-lines text-info-custom me-2 mt-1"></i> 
                                     <?php else: ?>
-                                        <i class="fa-solid fa-circle-xmark text-danger-custom"></i>
+                                        <i class="fa-solid fa-circle-xmark text-danger-custom me-2 mt-1"></i> 
                                     <?php endif; ?>
-
+                                    
+                                    
                                     <div>
                                         <span class="student-name"><?php echo e($attendance->student->name); ?></span>
                                         <span class="student-nis">(<?php echo e($attendance->student->nis); ?>)</span>
+                                        
+                                        
+                                        <span class="d-block text-muted" style="font-size: 0.8rem;">
+                                            <?php echo e(\Carbon\Carbon::parse($attendance->created_at)->translatedFormat('l, d F Y H:i:s')); ?>
+
+                                        </span>
+                                        
+
                                     </div>
                                 </div>
-                                <!-- Badge Status -->
-                                <span class="badge status-badge
-                                    <?php if($attendance->status == 'Hadir'): ?> status-hadir
-                                    <?php elseif($attendance->status == 'Izin'): ?> status-izin
-                                    <?php else: ?> status-alpa <?php endif; ?>">
 
-                                    <?php if($attendance->status == 'Hadir'): ?>
-                                        <i class="fa-solid fa-check"></i>
-                                    <?php elseif($attendance->status == 'Izin'): ?>
-                                        <i class="fa-solid fa-info-circle"></i>
-                                    <?php else: ?>
-                                        <i class="fa-solid fa-times-circle"></i>
-                                    <?php endif; ?>
-                                    <?php echo e($attendance->status); ?>
+                                
+                                <div class="text-end">
+                                    <!-- Badge Status -->
+                                    <span class="badge status-badge d-block mb-1 
+                                        <?php if($attendance->status == 'Hadir'): ?> status-hadir
+                                        <?php elseif($attendance->status == 'Izin'): ?> status-izin
+                                        <?php else: ?> status-alpa <?php endif; ?>">
+                                        
+                                        <?php if($attendance->status == 'Hadir'): ?>
+                                            <i class="fa-solid fa-check"></i>
+                                        <?php elseif($attendance->status == 'Izin'): ?>
+                                            <i class="fa-solid fa-info-circle"></i>
+                                        <?php else: ?>
+                                            <i class="fa-solid fa-times-circle"></i>
+                                        <?php endif; ?>
+                                        <?php echo e($attendance->status); ?>
 
-                                </span>
+                                    </span>
+
+                                    
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton-<?php echo e($attendance->student->id); ?>" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .75rem;">
+                                            Ubah
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-<?php echo e($attendance->student->id); ?>">
+                                            <li>
+                                                <form action="<?php echo e(route('attendance.update')); ?>" method="POST">
+                                                    <?php echo csrf_field(); ?>
+                                                    <input type="hidden" name="student_id" value="<?php echo e($attendance->student->id); ?>">
+                                                    <input type="hidden" name="status" value="Hadir">
+                                                    <button type="submit" class="dropdown-item">Hadir</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form action="<?php echo e(route('attendance.update')); ?>" method="POST">
+                                                    <?php echo csrf_field(); ?>
+                                                    <input type="hidden" name="student_id" value="<?php echo e($attendance->student->id); ?>">
+                                                    <input type="hidden" name="status" value="Izin">
+                                                    <button type="submit" class="dropdown-item">Izin</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form action="<?php echo e(route('attendance.update')); ?>" method="POST">
+                                                    <?php echo csrf_field(); ?>
+                                                    <input type="hidden" name="student_id" value="<?php echo e($attendance->student->id); ?>">
+                                                    <input type="hidden" name="status" value="Alpa">
+                                                    <button type="submit" class="dropdown-item">Alpa</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                </div>
+
                             </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <li class="list-group-item text-center no-data-item">
@@ -66,7 +116,7 @@
             </div>
         </div>
 
-        <!-- Kolom Siswa Belum Hadir (Dengan Dropdown) -->
+        <!-- Kolom Siswa Belum Hadir (Kode Anda) -->
         <div class="col-lg-6 mb-4">
             <div class="card h-100 shadow-sm border-0">
                 <!-- Header Kartu -->
@@ -130,6 +180,5 @@
     </div>
 </div>
 <?php $__env->stopSection(); ?>
-
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\ABSENSI-KKT\aplikasi-absensi-qrcode\resources\views/home.blade.php ENDPATH**/ ?>

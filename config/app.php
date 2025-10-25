@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\ServiceProvider;
+
 return [
 
     /*
@@ -54,6 +57,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'asset_url' => env('ASSET_URL'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -65,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Makassar', // Sesuai setelan Manado (WITA)
 
     /*
     |--------------------------------------------------------------------------
@@ -78,11 +83,11 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => 'id', // Dipertahankan 'id' agar tanggal di dashboard tetap Bahasa Indonesia
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+    'fallback_locale' => 'en', // Disederhanakan dari env()
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+    'faker_locale' => 'id_ID', // Diubah agar data dummy (jika ada) sesuai format Indonesia
 
     /*
     |--------------------------------------------------------------------------
@@ -123,4 +128,50 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Autoloaded Service Providers
+    |--------------------------------------------------------------------------
+    |
+    | The service providers listed here will be automatically loaded on the
+    | request to your application. Feel free to add your own services to
+    | this array to grant expanded functionality to your applications.
+    |
+    | Bagian ini ditambahkan kembali karena penting untuk aplikasi
+    |
+    */
+
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        /*
+         * Package Service Providers...
+         */
+
+        /*
+         * Application Service Providers...
+         */
+        App\Providers\AppServiceProvider::class,
+        // App\Providers\AuthServiceProvider::class, // <-- DIKOMENTARI KARENA FILE TIDAK ADA
+        // App\Providers\BroadcastServiceProvider::class,
+        // App\Providers\EventServiceProvider::class, // <-- DIKOMENTARI KARENA FILE TIDAK ADA
+        // App\Providers\RouteServiceProvider::class, // <-- DIKOMENTARI KARENA FILE TIDAK ADA
+    ])->toArray(),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Class Aliases
+    |--------------------------------------------------------------------------
+    |
+    | This array of class aliases will be registered when this application
+    | is started. However, feel free to register as many as you wish as
+    | the aliases are "lazy" loaded so they don't hinder performance.
+    |
+    | Bagian ini ditambahkan kembali karena penting untuk aplikasi
+    |
+    */
+
+    'aliases' => Facade::defaultAliases()->merge([
+        // 'Example' => App\Facades\Example::class,
+    ])->toArray(),
+
 ];
+

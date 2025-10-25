@@ -23,37 +23,86 @@
 
                     <ul class="list-group list-group-flush attendance-list">
                         @forelse($presentStudents as $attendance)
-                            <li class="list-group-item">
-                                <!-- Konten (Ikon & Nama) -->
-                                <div class="item-content">
+                            {{-- Modifikasi LI agar flex dan rata --}}
+                            <li class="list-group-item d-flex justify-content-between align-items-start"> 
+                                
+                                <!-- Konten (Ikon & Nama & Waktu) -->
+                                <div class="item-content d-flex"> {{-- Tambah d-flex --}}
                                     @if($attendance->status == 'Hadir')
-                                        <i class="fa-solid fa-id-badge text-success-custom"></i>
+                                        <i class="fa-solid fa-id-badge text-success-custom me-2 mt-1"></i> {{-- Tambah margin --}}
                                     @elseif($attendance->status == 'Izin')
-                                        <i class="fa-solid fa-file-lines text-info-custom"></i>
+                                        <i class="fa-solid fa-file-lines text-info-custom me-2 mt-1"></i> {{-- Tambah margin --}}
                                     @else
-                                        <i class="fa-solid fa-circle-xmark text-danger-custom"></i>
+                                        <i class="fa-solid fa-circle-xmark text-danger-custom me-2 mt-1"></i> {{-- Tambah margin --}}
                                     @endif
-
+                                    
+                                    {{-- Grup Nama dan Waktu --}}
                                     <div>
                                         <span class="student-name">{{ $attendance->student->name }}</span>
                                         <span class="student-nis">({{ $attendance->student->nis }})</span>
+                                        
+                                        {{-- ===== FITUR BARU: WAKTU PRESENSI ===== --}}
+                                        <span class="d-block text-muted" style="font-size: 0.8rem;">
+                                            {{ \Carbon\Carbon::parse($attendance->created_at)->translatedFormat('l, d F Y H:i:s') }}
+                                        </span>
+                                        {{-- ===== AKHIR FITUR BARU ===== --}}
+
                                     </div>
                                 </div>
-                                <!-- Badge Status -->
-                                <span class="badge status-badge
-                                    @if($attendance->status == 'Hadir') status-hadir
-                                    @elseif($attendance->status == 'Izin') status-izin
-                                    @else status-alpa @endif">
 
-                                    @if($attendance->status == 'Hadir')
-                                        <i class="fa-solid fa-check"></i>
-                                    @elseif($attendance->status == 'Izin')
-                                        <i class="fa-solid fa-info-circle"></i>
-                                    @else
-                                        <i class="fa-solid fa-times-circle"></i>
-                                    @endif
-                                    {{ $attendance->status }}
-                                </span>
+                                {{-- Grup Badge dan Tombol Edit --}}
+                                <div class="text-end">
+                                    <!-- Badge Status -->
+                                    <span class="badge status-badge d-block mb-1 {{-- Class dinamis badge --}}
+                                        @if($attendance->status == 'Hadir') status-hadir
+                                        @elseif($attendance->status == 'Izin') status-izin
+                                        @else status-alpa @endif">
+                                        
+                                        @if($attendance->status == 'Hadir')
+                                            <i class="fa-solid fa-check"></i>
+                                        @elseif($attendance->status == 'Izin')
+                                            <i class="fa-solid fa-info-circle"></i>
+                                        @else
+                                            <i class="fa-solid fa-times-circle"></i>
+                                        @endif
+                                        {{ $attendance->status }}
+                                    </span>
+
+                                    {{-- ===== FITUR BARU: TOMBOL EDIT ===== --}}
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton-{{$attendance->student->id}}" data-bs-toggle="dropdown" aria-expanded="false" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .75rem;">
+                                            Ubah
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-{{$attendance->student->id}}">
+                                            <li>
+                                                <form action="{{ route('attendance.update') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="student_id" value="{{ $attendance->student->id }}">
+                                                    <input type="hidden" name="status" value="Hadir">
+                                                    <button type="submit" class="dropdown-item">Hadir</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form action="{{ route('attendance.update') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="student_id" value="{{ $attendance->student->id }}">
+                                                    <input type="hidden" name="status" value="Izin">
+                                                    <button type="submit" class="dropdown-item">Izin</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form action="{{ route('attendance.update') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="student_id" value="{{ $attendance->student->id }}">
+                                                    <input type="hidden" name="status" value="Alpa">
+                                                    <button type="submit" class="dropdown-item">Alpa</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    {{-- ===== AKHIR FITUR BARU ===== --}}
+                                </div>
+
                             </li>
                         @empty
                             <li class="list-group-item text-center no-data-item">
@@ -66,7 +115,7 @@
             </div>
         </div>
 
-        <!-- Kolom Siswa Belum Hadir (Dengan Dropdown) -->
+        <!-- Kolom Siswa Belum Hadir (Kode Anda) -->
         <div class="col-lg-6 mb-4">
             <div class="card h-100 shadow-sm border-0">
                 <!-- Header Kartu -->
@@ -130,4 +179,3 @@
     </div>
 </div>
 @endsection
-

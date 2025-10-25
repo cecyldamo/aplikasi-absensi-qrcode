@@ -66,6 +66,15 @@
                                     <i class="fa-solid fa-table-columns me-1"></i> Dashboard
                                 </a>
                             </li>
+
+                            <!-- === LINK "DATA SISWA" DITAMBAHKAN KEMBALI === -->
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo e(request()->routeIs('students.index') ? 'active' : ''); ?>" href="<?php echo e(route('students.index')); ?>">
+                                    <i class="fa-solid fa-users-cog me-1"></i> Data Siswa
+                                </a>
+                            </li>
+                            <!-- === AKHIR LINK === -->
+
                             <li class="nav-item">
                                 <a class="nav-link <?php echo e(request()->routeIs('scanner') ? 'active' : ''); ?>" href="<?php echo e(route('scanner')); ?>">
                                     <i class="fa-solid fa-camera me-1"></i> Scanner
@@ -73,7 +82,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link <?php echo e(request()->routeIs('students.qrcodes') ? 'active' : ''); ?>" href="<?php echo e(route('students.qrcodes')); ?>">
-                                    <i class="fa-solid fa-users me-1"></i> QR Codes Siswa
+                                    <i class="fa-solid fa-id-card me-1"></i> QR Codes Siswa
                                 </a>
                             </li>
                             <!-- == AKHIR LINK NAVIGASI BARU == -->
