@@ -32,18 +32,18 @@
                                     <?php else: ?>
                                         <i class="fa-solid fa-circle-xmark text-danger-custom"></i>
                                     <?php endif; ?>
-                                    
+
                                     <div>
                                         <span class="student-name"><?php echo e($attendance->student->name); ?></span>
                                         <span class="student-nis">(<?php echo e($attendance->student->nis); ?>)</span>
                                     </div>
                                 </div>
                                 <!-- Badge Status -->
-                                <span class="badge status-badge 
+                                <span class="badge status-badge
                                     <?php if($attendance->status == 'Hadir'): ?> status-hadir
                                     <?php elseif($attendance->status == 'Izin'): ?> status-izin
                                     <?php else: ?> status-alpa <?php endif; ?>">
-                                    
+
                                     <?php if($attendance->status == 'Hadir'): ?>
                                         <i class="fa-solid fa-check"></i>
                                     <?php elseif($attendance->status == 'Izin'): ?>
@@ -66,7 +66,7 @@
             </div>
         </div>
 
-        <!-- Kolom Siswa Belum Hadir -->
+        <!-- Kolom Siswa Belum Hadir (Dengan Dropdown) -->
         <div class="col-lg-6 mb-4">
             <div class="card h-100 shadow-sm border-0">
                 <!-- Header Kartu -->
@@ -77,39 +77,45 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush attendance-list">
                         <?php $__empty_1 = true; $__currentLoopData = $absentStudents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                            <!-- TATA LETAK DIPERBARUI AGAR TOMBOL SEJAJAR -->
-                            <li class="list-group-item">
-                                <!-- Konten (Ikon & Nama) -->
-                                <div class="item-content">
-                                    <i class="fa-regular fa-user text-muted"></i>
-                                    <div>
-                                        <span class="student-name"><?php echo e($student->name); ?></span>
-                                        <span class="student-nis">(<?php echo e($student->nis); ?>)</span>
+                            <li class="list-group-item student-item-absent"> <!-- Tambahkan class student-item-absent -->
+                                <!-- Area yang bisa diklik untuk dropdown -->
+                                <a href="#" class="dropdown-toggle-student" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="item-content">
+                                        <i class="fa-regular fa-user text-muted"></i>
+                                        <div>
+                                            <span class="student-name"><?php echo e($student->name); ?></span>
+                                            <span class="student-nis">(<?php echo e($student->nis); ?>)</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- Tombol Aksi (Akan sejajar di kanan) -->
-                                <div class="action-buttons">
-                                    <form action="<?php echo e(route('attendance.update')); ?>" method="POST" class="d-inline-block">
-                                        <?php echo csrf_field(); ?>
-                                        <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
-                                        <input type="hidden" name="status" value="Izin">
-                                        <!-- DIPERBAIKI: Menambahkan tanda '=' -->
-                                        <button type="submit" class="btn btn-sm btn-izin">
-                                            <i class="fa-solid fa-file-lines"></i>
-                                            <span>Izin</span>
-                                        </button>
-                                    </form>
-                                    <form action="<?php echo e(route('attendance.update')); ?>" method="POST" class="d-inline-block">
-                                        <?php echo csrf_field(); ?>
-                                        <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
-                                        <input type="hidden" name="status" value="Alpa">
-                                        <!-- DIPERBAIKI: Menambahkan tanda '=' -->
-                                        <button type="submit" class="btn btn-sm btn-alpa">
-                                            <i class="fa-solid fa-circle-xmark"></i>
-                                            <span>Alpa</span>
-                                        </button>
-                                    </form>
-                                </div>
+                                    <!-- Ikon panah dropdown -->
+                                    <i class="fa-solid fa-caret-down dropdown-arrow"></i>
+                                </a>
+
+                                <!-- Menu Dropdown -->
+                                <ul class="dropdown-menu dropdown-menu-student">
+                                    <li>
+                                        <!-- Form untuk Izin -->
+                                        <form action="<?php echo e(route('attendance.update')); ?>" method="POST" class="d-inline">
+                                            <?php echo csrf_field(); ?>
+                                            <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
+                                            <input type="hidden" name="status" value="Izin">
+                                            <button type="submit" class="dropdown-item dropdown-item-izin">
+                                                <i class="fa-solid fa-file-lines me-2"></i>Tandai Izin
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <!-- Form untuk Alpa -->
+                                        <form action="<?php echo e(route('attendance.update')); ?>" method="POST" class="d-inline">
+                                            <?php echo csrf_field(); ?>
+                                            <input type="hidden" name="student_id" value="<?php echo e($student->id); ?>">
+                                            <input type="hidden" name="status" value="Alpa">
+                                            <button type="submit" class="dropdown-item dropdown-item-alpa">
+                                                <i class="fa-solid fa-circle-xmark me-2"></i>Tandai Alpa
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <li class="list-group-item text-center no-data-item">
@@ -126,4 +132,4 @@
 <?php $__env->stopSection(); ?>
 
 
-<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\user\aplikasi-absensi-qrcode\resources\views/home.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\ABSENSI-KKT\aplikasi-absensi-qrcode\resources\views/home.blade.php ENDPATH**/ ?>

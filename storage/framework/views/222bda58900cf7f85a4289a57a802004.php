@@ -11,18 +11,18 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <!-- Menggunakan font Nunito yang lebih lengkap (weight 400, 600, 700) -->
     <link href="https://fonts.bunny.net/css?family=Nunito:400,600,700&display=swap" rel="stylesheet">
-    
-    <!-- ICONS (Font Awesome) - Penting untuk ikon-ikon baru -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" xintegrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Custom Stylesheet - Penting untuk desain baru -->
-    <link href="<?php echo e(asset('css/custom.css')); ?>" rel="stylesheet">
+    <!-- ICONS (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Scripts Bawaan Laravel (Vite) -->
     <?php echo app('Illuminate\Foundation\Vite')(['resources/sass/app.scss', 'resources/js/app.js']); ?>
+
+    <!-- ✅ Custom Stylesheet Ditaruh Paling BAWAH agar menimpa Bootstrap -->
+    <link href="<?php echo e(asset('css/custom.css')); ?>" rel="stylesheet">
 </head>
+
 <body>
     <div id="app">
         <!-- Navbar yang sudah di-style dengan custom.css -->
@@ -116,4 +116,4 @@
 </body>
 </html>
 
-<?php /**PATH C:\Users\user\aplikasi-absensi-qrcode\resources\views/layouts/app.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\ABSENSI-KKT\aplikasi-absensi-qrcode\resources\views/layouts/app.blade.php ENDPATH**/ ?>
