@@ -1,0 +1,356 @@
+/*
+ * Custom Stylesheet for Absensi QR Code App
+ * This file contains all the custom styles for the new modern look.
+ */
+
+/* 1. Global & Font Setup
+-------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    background-color: #f4f7f6; /* Warna latar belakang yang lebih lembut */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 2. Custom Navbar
+-------------------------------------------------- */
+#app .navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+
+#app .navbar-brand {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #0d6efd; /* Biru primer Bootstrap */
+}
+
+#app .nav-link {
+    font-weight: 500;
+    color: #555;
+    transition: all 0.2s ease;
+    margin: 0 0.5rem;
+    border-radius: 6px;
+    padding: 0.5rem 1rem !important;
+}
+
+#app .nav-link:hover,
+#app .nav-link.active {
+    color: #0d6efd;
+    background-color: #eef5ff;
+}
+
+#app .navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+#app .navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* 3. Custom Card Styles (Dasbor, Scanner)
+-------------------------------------------------- */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    overflow: hidden; /* Penting untuk header */
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    border-bottom: none;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+    padding: 1.25rem;
+}
+
+.card-header i {
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+/* 4. Background Gradien (Palet Warna Baru)
+-------------------------------------------------- */
+.bg-success-custom {
+    background: linear-gradient(135deg, #198754, #28a745);
+}
+
+.bg-danger-custom {
+    background: linear-gradient(135deg, #dc3545, #fd6b78);
+}
+
+.bg-primary-custom {
+    background: linear-gradient(135deg, #0d6efd, #4dabf7);
+}
+
+.bg-info-custom {
+    background: linear-gradient(135deg, #0dcaf0, #3ee6c5);
+}
+
+/* 5. Dashboard List Group (Siswa Hadir & Belum Hadir)
+-------------------------------------------------- */
+
+/* Ini adalah perbaikan utama untuk alignment tombol */
+.list-group-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    flex-wrap: nowrap; /* Mencegah item turun ke baris baru */
+    gap: 15px; /* Memberi jarak antara nama dan tombol */
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: #fcfcfc;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+/* Kontainer untuk ikon dan nama */
+.item-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0; /* Penting untuk flexbox agar 'text-truncate' berfungsi */
+}
+
+.item-content i {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.item-content div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Penting juga di sini */
+}
+
+.student-name {
+    font-weight: 500;
+    color: #212529;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Menambahkan '...' jika nama terlalu panjang */
+}
+
+.student-nis {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+/* 6. Status Badges & Action Buttons
+-------------------------------------------------- */
+
+/* Penampung tombol (Izin, Alpa) */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0; /* Mencegah tombol menyusut */
+}
+
+/* Badge status di kolom "Sudah Hadir" */
+.status-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.4em 0.75em;
+    border-radius: 20px;
+    color: #fff;
+    white-space: nowrap; /* Mencegah teks badge turun */
+}
+
+.status-badge i {
+    font-size: 0.75rem;
+    margin-right: 4px;
+}
+
+.status-hadir { background-color: #28a745; }
+.status-izin { background-color: #0dcaf0; }
+.status-alpa { background-color: #dc3545; }
+
+/* Tombol Aksi di kolom "Belum Hadir" */
+.btn-izin, .btn-alpa {
+    color: #fff !important;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.75rem;
+}
+
+.btn-izin { background-color: #17a2b8; } /* Biru Info */
+.btn-alpa { background-color: #ffc107; } /* Kuning Warning */
+
+.btn-izin:hover { background-color: #138496; transform: scale(1.05); }
+.btn-alpa:hover { background-color: #e0a800; transform: scale(1.05); }
+
+/* Menghilangkan teks di tombol pada layar kecil */
+@media (max-width: 576px) {
+    .btn-izin span, .btn-alpa span {
+        display: none;
+    }
+    .btn-izin, .btn-alpa {
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+
+/* 7. Halaman Scanner
+-------------------------------------------------- */
+#qr-reader-container {
+    width: 100%;
+    max-width: 500px; /* Batas maksimum agar tidak terlalu besar di desktop */
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+#qr-reader {
+    width: 100%;
+    border: none !important;
+}
+
+/* Memperbaiki style tombol bawaan library */
+#qr-reader button {
+    background-color: #0d6efd !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 10px 15px !important;
+    font-weight: 500 !important;
+    transition: background-color 0.3s ease !important;
+}
+
+#qr-reader button:hover {
+    background-color: #0b5ed7 !important;
+}
+
+#qr-reader select {
+    border-radius: 6px !important;
+    border: 1px solid #ced4da !important;
+    padding: 5px 10px !important;
+}
+
+/* 8. Halaman Daftar QR Code
+-------------------------------------------------- */
+.qr-card-grid {
+    display: grid;
+    /* Grid responsif: 1 kolom di HP, 2 di tablet, 3-4 di desktop */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.qr-card {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    text-align: center;
+}
+
+.qr-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.qr-code-img {
+    padding: 1.5rem;
+    background: #fdfdfd;
+}
+
+/* SVG yang di-generate oleh simple-qrcode */
+.qr-code-img svg {
+    width: 100%;
+    height: auto;
+}
+
+.qr-card-footer {
+    padding: 1rem;
+    background: #ffffff;
+    border-top: 1px solid #f0f0f0;
+}
+
+.qr-card-footer .student-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.qr-card-footer .student-nis {
+    font-size: 0.9rem;
+    color: #6c757d;
+    display: block;
+}
+
+/* 9. Penyesuaian Responsif
+-------------------------------------------------- */
+@media (max-width: 991.98px) {
+    /* Membuat kolom di dashboard menjadi tumpuk di bawah layar 'large' */
+    .row {
+        gap: 1.5rem 0;
+    }
+    .col-lg-6.mb-4 {
+        margin-bottom: 0 !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body {
+        font-size: 15px;
+    }
+
+    .card-header {
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+
+    .list-group-item {
+        padding: 0.8rem 1rem;
+    }
+
+    .qr-card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .qr-code-img {
+        padding: 1rem;
+    }
+
+    .qr-card-footer {
+        padding: 0.75rem;
+    }
+
+    .qr-card-footer .student-name {
+        font-size: 0.9rem;
+    }
+    .qr-card-footer .student-nis {
+        font-size: 0.8rem;
+    }
+}
+
