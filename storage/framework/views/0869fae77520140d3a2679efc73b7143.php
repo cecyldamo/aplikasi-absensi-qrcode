@@ -15,53 +15,54 @@
                         <?php echo csrf_field(); ?>
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama Siswa</label>
-                            <input type="text" class="form-control <?php $__errorArgs = ['name'];
+                            <input type="text"
+                                   class="form-control <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="name" name="name" value="<?php echo e(old('name')); ?>" required>
+unset($__errorArgs, $__bag); ?>"
+                                   id="name" name="name" value="<?php echo e(old('name')); ?>" required>
                             <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                <div class="invalid-feedback">
-                                    <?php echo e($message); ?>
-
-                                </div>
+                                <div class="invalid-feedback"><?php echo e($message); ?></div>
                             <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
+
                         <div class="mb-3">
                             <label for="nis" class="form-label">NIS (Nomor Induk Siswa)</label>
-                            <input type="text" class="form-control <?php $__errorArgs = ['nis'];
+                            <input type="text"
+                                   class="form-control <?php $__errorArgs = ['nis'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="nis" name="nis" value="<?php echo e(old('nis')); ?>" required>
+unset($__errorArgs, $__bag); ?>"
+                                   id="nis" name="nis" value="<?php echo e(old('nis')); ?>" required>
                             <?php $__errorArgs = ['nis'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                <div class="invalid-feedback">
-                                    <?php echo e($message); ?>
-
-                                </div>
+                                <div class="invalid-feedback"><?php echo e($message); ?></div>
                             <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <button type="submit" class="btn btn-success-custom w-100">
+
+                        <!-- Tambahkan mt-3 agar tombol lebih turun -->
+                        <button type="submit" class="btn btn-success-custom w-100 mt-3">
                             <i class="fa-solid fa-save me-2"></i>
                             Simpan
                         </button>
@@ -73,9 +74,7 @@ unset($__errorArgs, $__bag); ?>
         <!-- Kolom Daftar Siswa -->
         <div class="col-md-8 mb-4">
             <div class="card shadow-sm border-0 h-100">
-                 <!-- === PERUBAHAN DI SINI === -->
-                <div class="card-header bg-info-custom text-white"> 
-                 <!-- ======================== -->
+                <div class="card-header bg-info-custom text-white">
                     <i class="fa-solid fa-users me-2"></i>
                     Daftar Siswa (<?php echo e($students->count()); ?>)
                 </div>
@@ -88,7 +87,8 @@ unset($__errorArgs, $__bag); ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     <?php endif; ?>
-                     <?php if(session('error')): ?>
+
+                    <?php if(session('error')): ?>
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <i class="fa-solid fa-circle-xmark me-2"></i>
                             <?php echo e(session('error')); ?>
@@ -100,7 +100,6 @@ unset($__errorArgs, $__bag); ?>
                     <ul class="list-group list-group-flush attendance-list">
                         <?php $__empty_1 = true; $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                             <li class="list-group-item">
-                                <!-- Konten (Ikon & Nama) -->
                                 <div class="item-content">
                                     <i class="fa-regular fa-user text-muted"></i>
                                     <div>
@@ -108,11 +107,12 @@ unset($__errorArgs, $__bag); ?>
                                         <span class="student-nis">(<?php echo e($student->nis); ?>)</span>
                                     </div>
                                 </div>
-                                <!-- Tombol Aksi (Hapus) -->
-                                <form action="<?php echo e(route('students.destroy', $student->id)); ?>" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus siswa ini? Semua data absensi terkait akan ikut terhapus.');">
+                                <form action="<?php echo e(route('students.destroy', $student->id)); ?>" method="POST" id="delete-form-<?php echo e($student->id); ?>">
                                     <?php echo csrf_field(); ?>
                                     <?php echo method_field('DELETE'); ?>
-                                    <button type="submit" class="btn btn-sm btn-alpa">
+                                    <button type="button" class="btn btn-sm btn-alpa delete-button"
+                                            data-student-id="<?php echo e($student->id); ?>"
+                                            data-student-name="<?php echo e($student->name); ?>">
                                         <i class="fa-solid fa-trash-alt"></i>
                                         <span>Hapus</span>
                                     </button>
@@ -132,5 +132,46 @@ unset($__errorArgs, $__bag); ?>
 </div>
 <?php $__env->stopSection(); ?>
 
+<?php $__env->startPush('scripts'); ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (typeof Swal === 'undefined') {
+        console.error('SweetAlert2 gagal dimuat!');
+        return;
+    }
+
+    const deleteButtons = document.querySelectorAll('.delete-button');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            const studentId = this.dataset.studentId;
+            const studentName = this.dataset.studentName;
+            const form = document.getElementById(`delete-form-${studentId}`);
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                html: `Anda akan menghapus siswa <strong>${studentName}</strong>.<br>Semua data absensi terkait juga akan dihapus!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (form) {
+                        form.submit();
+                    } else {
+                        Swal.fire('Error!', 'Formulir penghapusan tidak ditemukan.', 'error');
+                    }
+                }
+            });
+        });
+    });
+});
+</script>
+<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\ABSENSI-KKT\aplikasi-absensi-qrcode\resources\views/students/index.blade.php ENDPATH**/ ?>

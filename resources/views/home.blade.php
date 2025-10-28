@@ -2,6 +2,15 @@
 
 @section('content')
 <div class="container">
+    <!-- === LANGKAH 6: TOMBOL EXPORT DITAMBAHKAN DI SINI === -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ route('attendance.export') }}" class="btn btn-success-custom">
+            <i class="fa-solid fa-file-excel me-2"></i>
+            Export ke Excel
+        </a>
+    </div>
+    <!-- ================================================= -->
+     
     <div class="row">
 
         <!-- Kolom Siswa Sudah Hadir -->
@@ -106,7 +115,6 @@
                             </li>
                         @empty
                             <li class="list-group-item text-center no-data-item">
-                                <i class="fa-solid fa-moon me-2 opacity-50"></i>
                                 Belum ada siswa yang hadir hari ini.
                             </li>
                         @endforelse

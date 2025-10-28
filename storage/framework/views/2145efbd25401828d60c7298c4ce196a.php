@@ -1,7 +1,5 @@
-@extends('layouts.app')
-
-@section('content')
-<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+<?php $__env->startSection('content'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('css/custom.css')); ?>">
 <style>
 /* === Styling Halaman Login === */
 body > main {
@@ -100,45 +98,73 @@ body > main {
             <p>Masuk untuk melanjutkan ke sistem absensi modern</p>
         </div>
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+        <form method="POST" action="<?php echo e(route('login')); ?>">
+            <?php echo csrf_field(); ?>
             <div class="mb-3">
                 <label for="email" class="form-label">Email Address</label>
                 <input id="email" type="email"
-                    class="form-control @error('email') is-invalid @enderror"
-                    name="email" value="{{ old('email') }}" required autofocus>
-                @error('email')
+                    class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                    name="email" value="<?php echo e(old('email')); ?>" required autofocus>
+                <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
+                        <strong><?php echo e($message); ?></strong>
                     </span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input id="password" type="password"
-                    class="form-control @error('password') is-invalid @enderror"
+                    class="form-control <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
                     name="password" required>
-                @error('password')
+                <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
+                        <strong><?php echo e($message); ?></strong>
                     </span>
-                @enderror
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                        {{ old('remember') ? 'checked' : '' }}>
+                        <?php echo e(old('remember') ? 'checked' : ''); ?>>
                     <label class="form-check-label" for="remember">
                         Remember Me
                     </label>
                 </div>
-                @if (Route::has('password.request'))
-                    <a class="forgot-link" href="{{ route('password.request') }}">
+                <?php if(Route::has('password.request')): ?>
+                    <a class="forgot-link" href="<?php echo e(route('password.request')); ?>">
                         Lupa Password?
                     </a>
-                @endif
+                <?php endif; ?>
             </div>
 
             <button type="submit" class="btn-login">
@@ -147,9 +173,11 @@ body > main {
 
             <div class="register-text">
                 Belum punya akun?
-                <a href="{{ route('register') }}">Daftar sekarang</a>
+                <a href="<?php echo e(route('register')); ?>">Daftar sekarang</a>
             </div>
         </form>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\ABSENSI-KKT\aplikasi-absensi-qrcode\resources\views/auth/login.blade.php ENDPATH**/ ?>

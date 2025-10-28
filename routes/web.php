@@ -21,17 +21,21 @@ Route::middleware(['auth'])->group(function () {
     // Route untuk menampilkan semua QR Code siswa
     Route::get('/students/qrcodes', [StudentController::class, 'showQrCodes'])->name('students.qrcodes');
     
-    // === RUTE YANG HILANG DITAMBAHKAN DI SINI ===
+    // === Rute yang sudah ada ===
     // Rute untuk mengelola siswa (CRUD)
     Route::get('/students', [StudentController::class, 'index'])->name('students.index');
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
     Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
-    // === AKHIR TAMBAHAN ===
+    // === AKHIR Rute yang sudah ada ===
 
     Route::get('/scanner', [AttendanceController::class, 'scanner'])->name('scanner');
     Route::post('/attendance', [AttendanceController::class, 'store'])->name('attendance.store');
     
     // Rute untuk update status dari dashboard
     Route::post('/home/update-attendance', [App\Http\Controllers\HomeController::class, 'updateAttendance'])->name('attendance.update');
+
+    // === LANGKAH 5: RUTE BARU UNTUK EXPORT EXCEL ===
+    Route::get('/home/export', [App\Http\Controllers\HomeController::class, 'exportAttendance'])->name('attendance.export');
+    // ===========================================
 });
 

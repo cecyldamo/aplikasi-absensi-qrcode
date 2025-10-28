@@ -7,6 +7,11 @@ use App\Models\Student;
 use App\Models\Attendance;
 use Carbon\Carbon; // Pastikan Carbon di-import
 
+// === IMPORT BARU UNTUK EXCEL (SAYA TAMBAHKAN KEMBALI) ===
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AttendanceExport;
+// ====================================================
+
 class HomeController extends Controller
 {
     /**
@@ -26,24 +31,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Set zona waktu WITA (Manado)
+        // Set zona waktu WITA (Manado) - DARI KODE ANDA
         $today = Carbon::today('Asia/Makassar');
 
         // Ambil ID siswa yang sudah absen hari ini
         $presentStudentIds = Attendance::whereDate('date', $today)
-                                        ->pluck('student_id');
+                                         ->pluck('student_id');
 
         // Ambil data siswa yang sudah hadir
-        // Urutkan berdasarkan waktu input terbaru (created_at desc)
+        // Urutkan berdasarkan waktu input terbaru (created_at desc) - DARI KODE ANDA
         $presentStudents = Attendance::with('student')
                                      ->whereDate('date', $today)
                                      ->orderBy('created_at', 'desc') // Diurutkan agar data terbaru di atas
                                      ->get();
 
         // Ambil data siswa yang belum hadir
+        // Urutkan berdasarkan nama - DARI KODE ANDA
         $absentStudents = Student::whereNotIn('id', $presentStudentIds)
-                                 ->orderBy('name', 'asc') // Urutkan berdasarkan nama
-                                 ->get();
+                                  ->orderBy('name', 'asc') // Urutkan berdasarkan nama
+                                  ->get();
 
         return view('home', compact('presentStudents', 'absentStudents'));
     }
@@ -59,7 +65,7 @@ class HomeController extends Controller
             'status' => 'required|in:Hadir,Izin,Alpa',
         ]);
 
-        // Set zona waktu WITA (Manado)
+        // Set zona waktu WITA (Manado) - DARI KODE ANDA
         $today = Carbon::today('Asia/Makassar');
 
         // Gunakan updateOrCreate untuk menangani data baru atau yang sudah ada
@@ -78,4 +84,19 @@ class HomeController extends Controller
 
         return redirect()->route('home')->with('success', 'Status absensi siswa berhasil diperbarui.');
     }
+
+    // === FUNGSI EXPORT (SAYA TAMBAHKAN KEMBALI & SESUAIKAN) ===
+    public function exportAttendance()
+    {
+        // Set tanggal hari ini (sesuai timezone Manado)
+        $today = Carbon::today('Asia/Makassar')->format('Y-m-d');
+        
+        // Buat nama file yang dinamis, contoh: rekap_absensi_2025-10-25.xlsx
+        $fileName = 'rekap_absensi_' . $today . '.xlsx';
+
+        // Panggil class AttendanceExport untuk membuat dan mengunduh file
+        return Excel::download(new AttendanceExport(), $fileName);
+    }
+    // =======================================================
 }
+

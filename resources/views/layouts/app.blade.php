@@ -16,20 +16,23 @@
     <!-- ICONS (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Scripts Bawaan Laravel (Vite) -->
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Laravel Vite -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
-    <!-- ✅ Custom Stylesheet Ditaruh Paling BAWAH agar menimpa Bootstrap -->
+    <!-- Custom Styles -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
 
 <body>
     <div id="app">
-        <!-- Navbar yang sudah di-style dengan custom.css -->
+        <!-- Navbar -->
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                    <i class="fa-solid fa-qrcode me-2"></i> <!-- Ikon Baru -->
+                    <i class="fa-solid fa-qrcode me-2"></i>
                     {{ config('app.name', 'Absensi') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -37,18 +40,15 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <!-- Bisa ditambahkan link di sini nanti -->
-                    </ul>
+                    <ul class="navbar-nav me-auto"></ul>
 
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}"><i class="fa-solid fa-right-to-bracket me-1"></i> {{ __('Login') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">
+                                        <i class="fa-solid fa-right-to-bracket me-1"></i> {{ __('Login') }}
+                                    </a>
                                 </li>
                             @endif
 
@@ -58,22 +58,16 @@
                                 </li>
                             @endif
                         @else
-                            <!-- == INI LINK NAVIGASI BARU ANDA == -->
                             <li class="nav-item">
-                                <!-- Menambahkan logika 'active' untuk menandai halaman yang sedang dibuka -->
                                 <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
                                     <i class="fa-solid fa-table-columns me-1"></i> Dashboard
                                 </a>
                             </li>
-
-                            <!-- === LINK "DATA SISWA" DITAMBAHKAN KEMBALI === -->
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('students.index') ? 'active' : '' }}" href="{{ route('students.index') }}">
                                     <i class="fa-solid fa-users-cog me-1"></i> Data Siswa
                                 </a>
                             </li>
-                            <!-- === AKHIR LINK === -->
-
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('scanner') ? 'active' : '' }}" href="{{ route('scanner') }}">
                                     <i class="fa-solid fa-camera me-1"></i> Scanner
@@ -84,18 +78,16 @@
                                     <i class="fa-solid fa-id-card me-1"></i> QR Codes Siswa
                                 </a>
                             </li>
-                            <!-- == AKHIR LINK NAVIGASI BARU == -->
 
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa-solid fa-user-shield me-1"></i>
                                     {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="fa-solid fa-right-from-bracket me-2"></i>
                                         {{ __('Logout') }}
                                     </a>
@@ -111,14 +103,17 @@
             </div>
         </nav>
 
-        <!-- Mengubah padding agar lebih pas di mobile (md-5) -->
-        <main class="py-4 py-md-5">
+        <!-- Main Content -->
+        <!-- FIX: Menghapus satu karakter '>' yang berlebih di akhir tag main -->
+        <main class="@if(!in_array(Route::currentRouteName(), ['login', 'register'])) py-2 py-md-3 @endif">
             @yield('content')
         </main>
     </div>
-    
-    <!-- Stack untuk script per-halaman (seperti scanner) -->
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <!-- Tempatkan script tambahan dari halaman -->
     @stack('scripts')
 </body>
 </html>
-
