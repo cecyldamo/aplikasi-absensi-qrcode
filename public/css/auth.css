@@ -1,0 +1,136 @@
+/*
+ * Custom Stylesheet for Authentication Pages
+ */
+
+/* Mengimpor font dari Google Fonts untuk tampilan yang lebih modern */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+/* Mengatur latar belakang utama dan font default */
+body.auth-page {
+    background-color: #B08A5D; /* Warna Coklat Muda dari palet */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Menghapus navbar khusus di halaman login dan registrasi */
+body.auth-page .navbar {
+    display: none;
+}
+
+/* Kontainer utama yang membungkus kartu login/registrasi */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* Kartu utama dengan efek bayangan dan sudut membulat */
+.auth-card {
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Penting agar sudut membulat diterapkan pada kolom internal */
+    border: none;
+}
+
+/* Kolom Informasi (sebelah kiri) */
+.auth-info-col {
+    background-color: #2A4D3E; /* Warna Hijau Tua dari palet */
+    color: #fff;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.auth-info-col h1 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.auth-info-col p {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Kolom Form (sebelah kanan) */
+.auth-form-col {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-form-col .form-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.auth-form-col .form-header h2 {
+    font-weight: 700;
+    color: #333;
+}
+
+/* Styling untuk input form */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #8C3B3B; /* Warna Merah Marun dari palet */
+    box-shadow: 0 0 0 0.25rem rgba(140, 59, 59, 0.25);
+}
+
+/* Styling untuk tombol */
+.btn-auth {
+    background-color: #8C3B3B; /* Warna Merah Marun dari palet */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.btn-auth:hover {
+    background-color: #6d2e2e; /* Warna Merah Marun lebih gelap */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tautan tambahan seperti "Lupa Password?" */
+.auth-link {
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.auth-link a {
+    color: #8C3B3B;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* Penyesuaian untuk layar kecil (di bawah 768px) */
+@media (max-width: 767.98px) {
+    .auth-info-col {
+        display: none; /* Sembunyikan kolom informasi di layar kecil */
+    }
+
+    .auth-form-col {
+        padding: 2rem;
+    }
+}
