@@ -1,7 +1,42 @@
+// Warna Palet Baru
+$dark-green: #1f4f34; // Dari palet
+$maroon: #8b0000;     // Dari palet
+$tan: #b8860b;       // Dari palet
+$light-gray: #f4f7f6; // Latar belakang yang ada
+$white: #ffffff;
+
 // Body
-$body-bg: #f8fafc;
+$body-bg: $light-gray;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-sans-serif: 'Inter', sans-serif; // Menggunakan Inter dari custom.css
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+// Mengganti Warna Tema Bootstrap
+$primary: $dark-green;  // Hijau tua sebagai warna utama
+$secondary: lighten($dark-green, 40%); // Hijau lebih muda sebagai sekunder
+$success: $dark-green;  // Hijau tua untuk sukses
+$info: $tan;          // Coklat tan untuk info
+$warning: darken($tan, 10%); // Coklat tan lebih gelap untuk peringatan
+$danger: $maroon;       // Merah marun untuk bahaya
+$light: $light-gray;
+$dark: darken($dark-green, 20%);
+
+// Link
+$link-color: $primary;
+$link-hover-color: darken($link-color, 15%);
+
+// Navbar
+$navbar-light-color: rgba(black, 0.65);
+$navbar-light-hover-color: $primary;
+$navbar-light-active-color: $primary;
+$navbar-light-toggler-border-color: rgba(black, 0.1);
+
+// Buttons
+$btn-link-hover-color: $link-hover-color;
+
+// Cards
+$card-border-radius: 12px; // Sesuaikan dengan custom.css
+$card-border-width: 0;
+$card-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);

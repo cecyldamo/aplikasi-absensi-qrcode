@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-    <title><?php echo e(config('app.name', 'Laravel')); ?> - Absensi Modern</title>
+    <title><?php echo e(config('app.name', 'Tes')); ?> - Absensi Modern</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -24,12 +24,45 @@
 
     <!-- Custom Styles -->
     <link href="<?php echo e(asset('css/custom.css')); ?>" rel="stylesheet">
+
+    <!-- Inline Styles for Auth Background -->
+    <?php if(in_array(Route::currentRouteName(), ['login', 'register'])): ?>
+    <style>
+        body.auth-bg {
+            /* Fallback solid color */
+            background-color: #e0f7fa; 
+            /* Simple gradient, replace with image or complex gradient if needed */
+            background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Hide navbar on auth pages */
+        body.auth-bg #app > nav.navbar {
+            display: none;
+        }
+        /* Ensure main content takes full height */
+         body.auth-bg #app {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+         }
+         body.auth-bg main {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+         }
+    </style>
+    <?php endif; ?>
 </head>
 
-<body>
+<!-- Add conditional class to body -->
+<body class="<?php echo e(in_array(Route::currentRouteName(), ['login', 'register']) ? 'auth-bg' : ''); ?>">
     <div id="app">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <!-- Perubahan: 'navbar-light bg-white' dihapus agar style dari custom.css (navbar merah marun) bisa diterapkan -->
+        <nav class="navbar navbar-expand-md shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="<?php echo e(url('/home')); ?>">
                     <i class="fa-solid fa-qrcode me-2"></i>
@@ -108,8 +141,8 @@
         </nav>
 
         <!-- Main Content -->
-        <!-- FIX: Menghapus satu karakter '>' yang berlebih di akhir tag main -->
-        <main class="<?php if(!in_array(Route::currentRouteName(), ['login', 'register'])): ?> py-2 py-md-3 <?php endif; ?>">
+        <!-- Perubahan: Menghapus class conditional padding -->
+        <main>
             <?php echo $__env->yieldContent('content'); ?>
         </main>
     </div>
@@ -121,4 +154,5 @@
     <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 </html>
+
 <?php /**PATH D:\ABSENSI-KKT\aplikasi-absensi-qrcode\resources\views/layouts/app.blade.php ENDPATH**/ ?>

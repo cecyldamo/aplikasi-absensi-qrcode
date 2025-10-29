@@ -4,41 +4,63 @@
 # General Styling & Variables
 --------------------------------------------------------------*/
 :root {
-    --primary-color: #4a90e2; /* Biru yang cerah */
-    --secondary-color: #50e3c2; /* Hijau tosca */
-    --success-color: #28a745; /* Hijau Bootstrap */
-    --danger-color: #dc3545; /* Merah Bootstrap */
-    --info-color: #17a2b8; /* Biru Info Bootstrap */
-    --warning-color: #ffc107; /* Kuning Bootstrap */
+    /* === Palet Warna Baru === */
+    --primary-color: #1f4f34;     /* Palet Hijau Tua */
+    --secondary-color: #b8860b;  /* Palet Coklat Tan */
+    --success-color: #1f4f34;     /* Palet Hijau Tua */
+    --danger-color: #8b0000;      /* Palet Merah Marun */
+    --info-color: #b8860b;        /* Palet Coklat Tan (untuk Izin) */
+    --warning-color: #8b0000;     /* Palet Merah Marun (untuk Alpa) */
+
+    /* Warna Netral (dari file asli) */
     --light-color: #f8f9fa;
     --dark-color: #343a40;
     --text-muted: #6c757d;
+
+    /* Style Global (dari file asli) */
     --font-family-sans-serif: 'Nunito', sans-serif;
-    --border-radius: 0.375rem; /* Sedikit lebih bulat */
+    --border-radius: 0.375rem;
+    --border-radius-lg: 0.75rem; /* Tambah radius lebih besar */
     --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     --box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175); /* Tambah shadow lebih besar */
 
-    /* === Variabel Warna Gradien untuk Tombol === */
-    --success-gradient-start: #198754;
-    --success-gradient-end: #28a745;
-    --success-gradient-start-hover: #157347; /* Lebih gelap */
-    --success-gradient-end-hover: #218838;   /* Lebih gelap */
 
-    --danger-gradient-start: #dc3545;
-    --danger-gradient-end: #fd6b78;
+    /* === Variabel Warna Gradien & Hover BARU === */
 
-    --primary-gradient-start: #0d6efd;
-    --primary-gradient-end: #4dabf7;
+    /* Sukses (Hijau) */
+    --success-gradient-start: #1f4f34;
+    --success-gradient-end: #2a6f47; /* Sedikit lebih terang */
+    --success-gradient-start-hover: #163825; /* Lebih gelap */
+    --success-gradient-end-hover: #1f4f34;   /* Lebih gelap */
 
-    --info-gradient-start: #0dcaf0;
-    --info-gradient-end: #3ee6c5;
-    --info-solid-hover: #0b95b0; /* Warna solid hover untuk Izin */
+    /* Bahaya (Marun) */
+    --danger-gradient-start: #8b0000;
+    --danger-gradient-end: #a52a2a; /* Sedikit lebih terang */
 
-    --warning-solid: #ffc107; /* Warna solid untuk Alpa */
-    --warning-solid-hover: #e0a800; /* Warna solid hover untuk Alpa */
-    
-    --secondary-gradient-start: #6c757d; 
+    /* Primary (Hijau -> Tan) */
+    --primary-gradient-start: #1f4f34;
+    --primary-gradient-end: #b8860b;
+    --primary-gradient-start-hover: #163825; /* Hijau Lebih Gelap */
+    --primary-gradient-end-hover: #936b09; /* Tan Lebih Gelap */
+
+    /* Info (Tan - untuk Izin) */
+    --info-gradient-start: #b8860b;
+    --info-gradient-end: #daa520; /* Goldenrod, sedikit lebih terang */
+    --info-solid-hover: #936b09; /* Coklat Tan lebih gelap */
+
+    /* Warning (Marun - untuk Alpa) */
+    --warning-solid: #8b0000;
+    --warning-solid-hover: #600000; /* Merah Marun lebih gelap */
+
+    /* Secondary (Abu-abu - dari file asli) */
+    --secondary-gradient-start: #6c757d;
     --secondary-gradient-end: #868e96;
+
+    /* Auth Colors (DIUBAH KE PALET) */
+    --auth-button-bg: var(--primary-color); /* Tombol utama: Hijau Tua */
+    --auth-button-hover-bg: var(--success-gradient-end); /* Hover: Hijau lebih terang */
+    --auth-link-color: var(--primary-color); /* Link: Hijau Tua */
 }
 
 body {
@@ -48,34 +70,103 @@ body {
 }
 
 /*--------------------------------------------------------------
-# Navbar Styling
+# Halaman Autentikasi Global (Login/Register)
+--------------------------------------------------------------*/
+body.auth-bg {
+    /* === DIUBAH: Gradien Merah Marun === */
+    background: linear-gradient(-45deg, var(--danger-gradient-start), var(--danger-gradient-end), var(--warning-solid-hover), var(--danger-gradient-start));
+    background-size: 400% 400%;
+    animation: authGradient 15s ease infinite;
+}
+
+@keyframes authGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Sembunyikan navbar di halaman auth */
+body.auth-bg #app > nav.navbar {
+    display: none;
+}
+
+/* Pusatkan konten di halaman auth */
+body.auth-bg #app,
+body.auth-bg > #app > main {
+    min-height: 100vh; /* Gunakan min-height agar konten tidak terpotong */
+    height: auto; /* Hapus height tetap */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /* Jaga agar tetap kolom */
+}
+
+/* Hapus padding default di main & beri padding di container #app */
+body.auth-bg #app {
+     padding: 1rem; /* Padding untuk mobile */
+     width: 100%; /* Pastikan #app mengambil lebar penuh */
+}
+body.auth-bg > #app > main {
+    padding: 0 !important; /* Hapus padding py-2 py-md-3 */
+    width: 100%; /* Pastikan main mengambil lebar penuh */
+    flex-grow: 1; /* Ambil sisa space */
+    display: flex; /* Jadikan flex untuk centering card */
+    align-items: center; /* Pusatkan card secara vertikal */
+    justify-content: center; /* Pusatkan card secara horizontal */
+}
+
+
+/*--------------------------------------------------------------
+# Navbar Styling (UPDATED SECTION)
 --------------------------------------------------------------*/
 .navbar {
     transition: all 0.3s ease-in-out;
+    /* Memberi override langsung ke class .navbar (menggantikan .bg-white) */
+    background-color: var(--danger-color) !important; /* DIUBAH ke Merah Marun */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
 }
 
+/* Mengganti warna teks navbar karena background diubah jadi gelap */
 .navbar-brand {
     font-weight: 700;
-    color: var(--primary-color) !important;
+    color: white !important; /* Paksa jadi putih */
 }
 
 .navbar-brand i {
-    color: var(--secondary-color);
+    color: var(--secondary-color) !important; /* Tetap Coklat Tan */
 }
 
 .nav-link {
     font-weight: 600;
     transition: color 0.2s ease-in-out;
+    color: rgba(255, 255, 255, 0.8) !important; /* Putih transparan */
 }
 
 .nav-link.active {
-    color: var(--primary-color) !important;
-    border-bottom: 2px solid var(--primary-color);
+    color: white !important; /* Putih solid */
+    border-bottom: 2px solid var(--secondary-color) !important; /* Coklat Tan */
 }
 .nav-link:hover {
-    color: var(--secondary-color) !important;
+    color: white !important; /* Putih solid saat hover */
 }
 
+/* Warna dropdown toggle (nama user) */
+.navbar .dropdown-toggle {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+.navbar .dropdown-toggle:hover {
+    color: white !important;
+}
+
+/* Warna ikon toggler (hamburger menu) */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Dropdown menu item (ini sudah benar) */
 .dropdown-item:hover {
     background-color: var(--secondary-color);
     color: white !important;
@@ -86,18 +177,111 @@ body {
 }
 
 /*--------------------------------------------------------------
+# Authentication Pages Styling (Login & Register) - NEW
+--------------------------------------------------------------*/
+.auth-card {
+    background-color: #fff;
+    border-radius: var(--border-radius-lg); /* Lebih bulat */
+    box-shadow: var(--box-shadow-lg);
+    padding: 2.5rem 2rem; /* Padding lebih besar */
+    width: 100%;
+    max-width: 450px; /* Batasi lebar card */
+    border: none;
+    margin: 1rem 0; /* Tambahkan margin atas bawah untuk mobile */
+}
+
+.auth-card .card-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-color); /* Judul: Hijau Tua */
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.auth-card .card-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.auth-card .form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--dark-color);
+}
+
+.auth-card .form-control {
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.auth-card .form-control:focus {
+    border-color: var(--auth-button-bg); /* Fokus input: Hijau Tua */
+    box-shadow: 0 0 0 0.25rem rgba(31, 79, 52, 0.25); /* Shadow Hijau Tua */
+}
+
+.auth-card .form-check-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.auth-card .auth-link {
+    font-size: 0.9rem;
+    color: var(--auth-link-color); /* Link: Hijau Tua */
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.auth-card .auth-link:hover {
+    color: var(--auth-button-hover-bg); /* Hover Link: Hijau lebih terang */
+    text-decoration: underline;
+}
+
+.auth-card .btn-auth {
+    background-color: var(--auth-button-bg); /* Tombol utama: Hijau Tua */
+    border-color: var(--auth-button-bg);
+    color: white;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease;
+    width: 100%; /* Tombol full width */
+}
+.auth-card .btn-auth:hover {
+    background-color: var(--auth-button-hover-bg); /* Hover Tombol: Hijau lebih terang */
+    border-color: var(--auth-button-hover-bg);
+}
+
+.auth-card .auth-footer-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+/*--------------------------------------------------------------
 # Card Styling (Dashboard, Scanner, QR Codes)
 --------------------------------------------------------------*/
 .card {
     border-radius: var(--border-radius);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     overflow: hidden; /* Agar gradien header tidak bocor */
+    border: none; /* Hapus border default jika ada */
 }
 
-.card:hover {
+/* Jangan terapkan style ini ke auth card */
+.card:not(.auth-card):hover {
     transform: translateY(-5px);
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15) !important;
 }
+/* Beri shadow default untuk card non-auth */
+.card:not(.auth-card) {
+     box-shadow: var(--box-shadow);
+}
+
 
 .card-header {
     color: white;
@@ -105,15 +289,15 @@ body {
     border-bottom: none; /* Hapus border bawaan */
 }
 
-/* Gradien Headers */
+/* Gradien Headers (Menggunakan Variabel Baru) */
 .bg-success-custom {
-    background: linear-gradient(135deg, #28a745, #20c997);
+    background: linear-gradient(135deg, var(--success-gradient-start), var(--success-gradient-end));
 }
 .bg-danger-custom {
-    background: linear-gradient(135deg, #dc3545, #fd7e14);
+    background: linear-gradient(135deg, var(--danger-gradient-start), var(--danger-gradient-end));
 }
 .bg-info-custom {
-    background: linear-gradient(135deg, #17a2b8, #6610f2);
+    background: linear-gradient(135deg, var(--info-gradient-start), var(--info-gradient-end));
 }
 .bg-primary-custom {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
@@ -122,6 +306,11 @@ body {
 .card-body {
     padding: 1.5rem; /* Padding lebih besar */
 }
+/* Kecuali auth card */
+.auth-card .card-body {
+    padding: 0; /* Hapus padding default di body auth card */
+}
+
 
 /*--------------------------------------------------------------
 # Attendance List Styling (Dashboard)
@@ -371,12 +560,12 @@ body {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     border: none;
     color: white;
-    box-shadow: 0 4px 15px 0 rgba(74, 144, 226, 0.3);
+    box-shadow: 0 4px 15px 0 rgba(31, 79, 52, 0.3); /* Shadow Hijau */
     transition: all 0.3s ease-out;
 }
 .btn-primary-custom:hover {
-    background: linear-gradient(135deg, #3a7bc8, #40c0a0); /* Sedikit lebih gelap */
-    box-shadow: 0 8px 20px 0 rgba(74, 144, 226, 0.4);
+    background: linear-gradient(135deg, var(--primary-gradient-start-hover), var(--primary-gradient-end-hover)); /* Variabel hover baru */
+    box-shadow: 0 8px 20px 0 rgba(31, 79, 52, 0.4); /* Shadow Hijau */
     transform: translateY(-2px);
     color: white;
 }
@@ -391,21 +580,21 @@ body {
   background-image: linear-gradient(to right, var(--success-gradient-start), var(--success-gradient-end));
   border: none;
   color: white !important; /* Tambahkan !important jika perlu */
-  box-shadow: 0 4px 15px 0 rgba(40, 167, 69, 0.3);
-  transition: all 0.3s ease-out; 
+  box-shadow: 0 4px 15px 0 rgba(31, 79, 52, 0.3); /* Shadow Hijau */
+  transition: all 0.3s ease-out;
 }
 
 /* Efek Hover untuk Tombol Sukses */
 .btn-success-custom:hover {
   background-image: linear-gradient(to right, var(--success-gradient-start-hover), var(--success-gradient-end-hover));
-  box-shadow: 0 8px 20px 0 rgba(40, 167, 69, 0.4);
+  box-shadow: 0 8px 20px 0 rgba(31, 79, 52, 0.4); /* Shadow Hijau */
   transform: translateY(-2px);
   color: white !important; /* Pastikan teks tetap putih */
 }
 
 /* Tombol Izin */
 .btn-izin {
-  background-color: var(--info-gradient-start); 
+  background-color: var(--info-gradient-start);
   color: #fff !important;
   font-weight: 500;
   border: none;
@@ -416,35 +605,35 @@ body {
   gap: 5px; /* Jarak antara ikon dan teks */
   font-size: 0.85rem;
   padding: 0.3rem 0.75rem;
-  box-shadow: 0 4px 15px 0 rgba(13, 202, 240, 0.2); 
+  box-shadow: 0 4px 15px 0 rgba(184, 134, 11, 0.2); /* Shadow Coklat Tan */
 }
 
-.btn-izin:hover { 
+.btn-izin:hover {
     background-color: var(--info-solid-hover); /* Gunakan variabel hover */
-    transform: scale(1.05); 
-    box-shadow: 0 6px 18px 0 rgba(13, 202, 240, 0.3); 
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px 0 rgba(184, 134, 11, 0.3); /* Shadow Coklat Tan */
 }
 
 /* Tombol Alpa (dan Hapus) */
-.btn-alpa { 
-    background-color: var(--warning-solid); 
-    color: #333 !important; /* Teks gelap agar kontras */
+.btn-alpa {
+    background-color: var(--warning-solid);
+    color: #fff !important; /* DIUBAH: Teks putih agar kontras di atas Marun */
     font-weight: 500;
     border: none;
     border-radius: 6px;
     transition: all 0.3s ease;
-    display: inline-flex; 
+    display: inline-flex;
     align-items: center;
-    gap: 5px; 
+    gap: 5px;
     font-size: 0.85rem;
     padding: 0.3rem 0.75rem;
-    box-shadow: 0 4px 15px 0 rgba(255, 193, 7, 0.2); 
+    box-shadow: 0 4px 15px 0 rgba(139, 0, 0, 0.2); /* Shadow Merah Marun */
 }
 
-.btn-alpa:hover { 
+.btn-alpa:hover {
     background-color: var(--warning-solid-hover); /* Gunakan variabel hover */
-    transform: scale(1.05); 
-    box-shadow: 0 6px 18px 0 rgba(255, 193, 7, 0.3); 
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px 0 rgba(139, 0, 0, 0.3); /* Shadow Merah Marun */
 }
 
 /* Menghilangkan teks di tombol Izin/Alpa pada layar kecil */
@@ -468,8 +657,13 @@ body {
 }
 
 @media (max-width: 767.98px) {
-    .card-body {
+    /* Hanya terapkan ke card non-auth */
+    .card:not(.auth-card) .card-body {
         padding: 1rem; /* Kurangi padding card di mobile */
+    }
+    .auth-card {
+        padding: 2rem 1.5rem; /* Kurangi padding auth card di mobile */
+        margin: 1rem 0; /* Pastikan tetap ada margin di mobile */
     }
     .item-content {
         gap: 0.75rem; /* Kurangi jarak ikon dan nama */
@@ -478,13 +672,15 @@ body {
         max-width: 120px; /* Kurangi lagi lebar maks nama */
     }
     /* Ganti grid QR Code agar tetap 2 kolom di mobile */
-    .qr-card-grid { 
+    .qr-card-grid {
        grid-template-columns: repeat(2, 1fr);
        gap: 1rem;
     }
 }
 
 /* Tambahkan jarak antara input terakhir dan tombol di form */
-form .btn-success-custom {
+form .btn-success-custom,
+form .btn-auth {
     margin-top: 1rem; /* 16px */
 }
+
