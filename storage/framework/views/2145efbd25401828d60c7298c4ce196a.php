@@ -4,7 +4,7 @@
         <div class="col-md-5 auth-info-col d-none d-md-flex">
             <div>
                 <h1>Selamat Datang!</h1>
-                <p>Silakan masuk untuk melanjutkan ke sistem presensi QR Code.</p>
+                <p>Silakan masuk untuk ke sistem Presensi QR Code.</p>
             </div>
         </div>
 
