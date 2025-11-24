@@ -26,8 +26,8 @@ class AttendanceController extends Controller
 
         // Cek apakah siswa sudah absen hari ini
         $todayAttendance = Attendance::where('student_id', $student->id)
-                                    ->whereDate('date', Carbon::today())
-                                    ->first();
+                                     ->whereDate('date', Carbon::today())
+                                     ->first();
 
         if ($todayAttendance) {
             return response()->json(['success' => false, 'message' => $student->name . ' sudah melakukan absensi hari ini.'], 409);
@@ -43,3 +43,4 @@ class AttendanceController extends Controller
         return response()->json(['success' => true, 'message' => 'Absensi untuk ' . $student->name . ' berhasil dicatat.']);
     }
 }
+

@@ -1,6 +1,6 @@
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="container">
     <div class="row justify-content-center">
         <!-- Mengubah ukuran kolom agar lebih pas di layar besar (col-md-8 -> col-lg-6) -->
@@ -29,9 +29,9 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('scripts')
+<?php $__env->startPush('scripts'); ?>
 <!-- Pustaka Axios untuk kirim data ke server -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -97,9 +97,9 @@
             }
 
             // Kirim data ke server menggunakan Axios
-            axios.post('{{ route("attendance.store") }}', {
+            axios.post('<?php echo e(route("attendance.store")); ?>', {
                 unique_code: decodedText, // Mengirim 'unique_code'
-                _token: '{{ csrf_token() }}' // Sertakan CSRF token
+                _token: '<?php echo e(csrf_token()); ?>' // Sertakan CSRF token
             })
             .then(function (response) {
                 // Handle success
@@ -149,5 +149,7 @@
     loadScript("https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js", startScanner);
 
 </script>
-@endpush
+<?php $__env->stopPush(); ?>
 
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\ABSENSI-KKT\aplikasi-absensi-qrcode\resources\views/attendance/scanner.blade.php ENDPATH**/ ?>
